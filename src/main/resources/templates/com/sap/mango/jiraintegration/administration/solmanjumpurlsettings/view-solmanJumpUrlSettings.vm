@@ -40,7 +40,7 @@
 
                              <div class="field-group">
                                 <label for="workItemAppJumpUrl">Work Item App Jump Url</label>
-                                <input class="text" type="text" id="workItemAppJumpUrl" name="workItemAppJumpUrl" length="90"/>
+                                <input class="text" type="text" id="workItemAppJumpUrl" name="workItemAppJumpUrl"/>
                              </div>
 
                            </form>
