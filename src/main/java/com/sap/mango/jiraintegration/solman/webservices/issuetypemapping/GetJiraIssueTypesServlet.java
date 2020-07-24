@@ -27,9 +27,9 @@ public class GetJiraIssueTypesServlet extends JsonServlet {
         Collection<IssueType> issueTypes = issueTypeManager.getIssueTypes();
         Collection<JiraIssueTypeBean> issueTypeBeans = new ArrayList<>();
         for (IssueType issueType : issueTypes) {
-            if (issueType.getName().equals("Epic") || issueType.getName().equals("Story")) {
+            // if (issueType.getName().equals("Epic") || issueType.getName().equals("Story")) {
                 issueTypeBeans.add(new JiraIssueTypeBean(issueType.getId(), issueType.getName()));
-            }
+            //}
         }
         sendOK(resp, issueTypeBeans);
     }
