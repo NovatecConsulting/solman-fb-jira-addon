@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.HttpMethod;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.List;
 
 /**
@@ -42,12 +43,12 @@ public class AddJumpUrlSettingsServlet extends JsonServlet {
             sendError_WrongParams(resp, "Parameter solManCustGuiD should not be empty.");
             return;
         }
-        String workPackageAppJumpUrl  = jumpUrlSettingsBean.getWorkPackageAppJumpUrl();
+        String workPackageAppJumpUrl  = URLDecoder.decode(jumpUrlSettingsBean.getWorkPackageAppJumpUrl(), "UTF-8");
         if (workPackageAppJumpUrl == null) {
             sendError_WrongParams(resp, "Parameter workPackageAppJumpUrl should not be empty.");
             return;
         }
-        String workItemAppJumpUrl = jumpUrlSettingsBean.getWorkItemAppJumpUrl();
+        String workItemAppJumpUrl = URLDecoder.decode(jumpUrlSettingsBean.getWorkItemAppJumpUrl(), "UTF-8");
         if (workItemAppJumpUrl == null) {
             sendError_WrongParams(resp, "Parameter workItemAppJumpUrl should not be empty.");
             return;
@@ -61,7 +62,7 @@ public class AddJumpUrlSettingsServlet extends JsonServlet {
 
         Integer jumpUrlSettingsID = jumpUrlSettingsDAO.saveJumpUrlSettings(solmanParams.get(0), workPackageAppJumpUrl, workItemAppJumpUrl);
         resp.setHeader("jumpUrlSettingsID", jumpUrlSettingsID.toString());
-        sendOK(resp, "nice");
+        sendOK(resp, "nice?!");
     }
 
     @Override

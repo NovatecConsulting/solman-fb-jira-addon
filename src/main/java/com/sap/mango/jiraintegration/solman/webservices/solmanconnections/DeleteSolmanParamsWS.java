@@ -27,11 +27,17 @@ public class DeleteSolmanParamsWS extends JsonServlet {
 
     @Override
     public void process(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
+        solmanParamsDAO.getSolmanParamsAll(false).forEach(solmanParams -> solmanParamsDAO.deleteSolmanParam(solmanParams.customerGuid));
+
+
         final String customerGuid = req.getParameter("customerGuid");
         if (customerGuid == null || customerGuid.isEmpty()) {
             sendError_WrongParams(response, "Parameter SolmanParams must not be empty");
             return;
         }
+
+
+
         Boolean isDeleted = solmanParamsDAO.deleteSolmanParam(customerGuid);
         if (isDeleted) {
             sendOK(response, true);

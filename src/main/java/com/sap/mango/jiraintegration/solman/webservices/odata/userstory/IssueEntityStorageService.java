@@ -195,7 +195,6 @@ public class IssueEntityStorageService {
         Property description = requestEntity.getProperty("DESCRIPTION");
         Property parentExternalID = requestEntity.getProperty("PARENT_EXTERNAL_ID");
 
-
         CustomField solManCustGuidCF = SolmanGuidCField.getCustomFieldByType("com.sap.mango.jiraintegration:solman-customer-guid");
 
         if (solManCustGuidCF == null) {

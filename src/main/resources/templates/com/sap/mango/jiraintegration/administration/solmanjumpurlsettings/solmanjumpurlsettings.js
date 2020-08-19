@@ -81,8 +81,8 @@ function spSaveSolmanJumpUrlSettings() {
 
           var options = {
               solManCustGuiD : AJS.$("#solman-connections-id").val(),
-              workPackageAppJumpUrl : AJS.$("#workPackageAppJumpUrl").val(),
-              workItemAppJumpUrl : AJS.$("#workItemAppJumpUrl").val()
+              workPackageAppJumpUrl : encodeURIComponent(AJS.$("#workPackageAppJumpUrl").val()),
+              workItemAppJumpUrl : encodeURIComponent(AJS.$("#workItemAppJumpUrl").val())
           };
 
           var errorMessage = '';
