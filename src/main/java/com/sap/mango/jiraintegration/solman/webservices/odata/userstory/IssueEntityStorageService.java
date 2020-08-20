@@ -154,7 +154,9 @@ public class IssueEntityStorageService {
         issueInputParameters.setIssueTypeId(issueType.getId());
         issueInputParameters.setDescription(description.getValue().toString());
         issueInputParameters.setPriorityId(priority.getId());
-        issueInputParameters.setReporterId(createdBy.getValue().toString()).setAssigneeId(createdBy.getValue().toString());
+        issueInputParameters.setReporterId(createdBy.getValue().toString());
+        //AWU: This is required to be empty for now.
+        //issueInputParameters.setAssigneeId(createdBy.getValue().toString());
         issueInputParameters.setSummary(description.getValue().toString());
         issueInputParameters.setOriginalEstimate(calculateOriginalEstimate(Double.valueOf(effort.getValue().toString()).longValue(), effortUnit.getValue().toString()));
 
@@ -378,7 +380,9 @@ public class IssueEntityStorageService {
         issueInputParameters.setIssueTypeId(issueType.getId());
         issueInputParameters.setDescription(description.getValue().toString());
         issueInputParameters.setPriorityId("1");
-        issueInputParameters.setReporterId(createdBy.getValue().toString()).setAssigneeId(createdBy.getValue().toString());
+        issueInputParameters.setReporterId(createdBy.getValue().toString());
+        //AWU: This is required to be empty for now.
+        //issueInputParameters.setAssigneeId(createdBy.getValue().toString());
         issueInputParameters.setSummary(description.getValue().toString());
         issueInputParameters.setOriginalEstimate(calculateOriginalEstimate(Double.valueOf(effort.getValue().toString()).longValue(), effortUnit.getValue().toString()));
         fillIssueCustomFields(updatedEntity, issueType, issueInputParameters);
