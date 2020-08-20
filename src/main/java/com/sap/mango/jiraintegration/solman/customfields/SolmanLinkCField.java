@@ -17,9 +17,8 @@ import java.util.List;
 
 /**
  * Created by vld on 07.01.16.
- *
  */
-public class SolmanLinkCField extends GenericTextCFType{
+public class SolmanLinkCField extends GenericTextCFType {
 
     private final SolmanParamsDAO solmanParamsDAO;
 
@@ -33,16 +32,16 @@ public class SolmanLinkCField extends GenericTextCFType{
         this.jumpUrlSettigsDAO = jumpUrlSettigsDAO;
     }
 
-    public static String getCustomFieldValueByType(String cFieldType, Issue issue){
-        CustomFieldManager customFieldManager =  ComponentAccessor.getCustomFieldManager();
+    public static String getCustomFieldValueByType(String cFieldType, Issue issue) {
+        CustomFieldManager customFieldManager = ComponentAccessor.getCustomFieldManager();
 
         final List<CustomField> customFieldObjects = customFieldManager.getCustomFieldObjects();
 
         for (CustomField customFieldObject : customFieldObjects) {
-            if (customFieldObject.getCustomFieldType().getKey().equals(cFieldType)){
+            if (customFieldObject.getCustomFieldType().getKey().equals(cFieldType)) {
 
                 Object object = issue.getCustomFieldValue(customFieldObject);
-                if (object != null){
+                if (object != null) {
                     final String value = object.toString();
                     if (value != null) {
                         return value;
@@ -56,17 +55,17 @@ public class SolmanLinkCField extends GenericTextCFType{
     @Override
     public String getValueFromIssue(CustomField field, Issue issue) {
         final String guid = getCustomFieldValueByType("com.sap.mango.jiraintegration:solman-guid", issue);
-        if (guid == null){
+        if (guid == null) {
             return "No guid maintaned";
         }
 
         final String customerGuid = getCustomFieldValueByType("com.sap.mango.jiraintegration:solman-customer-guid", issue);
-        if (customerGuid == null){
+        if (customerGuid == null) {
             return "No customer guid maintaned";
         }
 
         final List<SolmanParams> solmanParams = solmanParamsDAO.getSolmanParamsByGuid(customerGuid, false);
-        if (solmanParams.size() != 1){
+        if (solmanParams.size() != 1) {
             return "Invalid configuration for customer guid: " + customerGuid;
         }
         final SolmanParams sp = solmanParams.get(0);
@@ -77,14 +76,16 @@ public class SolmanLinkCField extends GenericTextCFType{
             return "Invalid configuration for customer guid: " + customerGuid;
         }
 
-        if (issue.getIssueTypeObject().getName().toUpperCase().contains("EPIC")){
+        if (issue.getIssueTypeObject().getName().toUpperCase().contains("EPIC")) {
             //return "<a href='https://hostname:port/sap/bc/ui5_ui5/salm/ost_wp/index.html?WP_GUID=" +  guid  +  " '>WP in SolMan</a>";
-            return "<a href='" + jumpUrlSettings.getWorkPackageAppJumpUrl() +  guid  +  "' target='_blank'>WP in SolMan</a>";
-        }else if (issue.getIssueTypeObject().getName().toUpperCase().contains("STORY")){
+            return "<a href='" + jumpUrlSettings.getWorkPackageAppJumpUrl() + guid + "' target='_blank'>WP in SolMan</a>";
+        } //AWU this is probably not necessary: else if (issue.getIssueTypeObject().getName().toUpperCase().contains("STORY"))
+        else {
             //return "<a href='https://hostname:port/sap/bc/ui5_ui5/salm/ost_wi/index.html?WS_GUID=" +  guid  +  " '>WI in SolMan</a>";
-            return "<a href='" + jumpUrlSettings.getWorkItemAppJumpUrl() +  guid  +  "' target='_blank'>WI in SolMan</a>";
-        }else{
-            return "Unknown issue type";
+            return "<a href='" + jumpUrlSettings.getWorkItemAppJumpUrl() + guid + "' target='_blank'>WI in SolMan</a>";
         }
+        /*AWU this is probably not necessary: else{
+            return "Unknown issue type";
+        }*/
     }
 }
