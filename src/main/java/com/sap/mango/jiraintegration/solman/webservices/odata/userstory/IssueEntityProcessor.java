@@ -1,6 +1,7 @@
 package com.sap.mango.jiraintegration.solman.webservices.odata.userstory;
 
 import com.sap.mango.jiraintegration.utils.ODataUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.olingo.commons.api.data.ContextURL;
 import org.apache.olingo.commons.api.data.Entity;
 import org.apache.olingo.commons.api.edm.EdmEntitySet;
@@ -73,7 +74,7 @@ public class IssueEntityProcessor implements EntityProcessor {
         LOG.debug("Request URI: " + oDataRequest.getRawRequestUri());
         LOG.debug("Protocol: " + oDataRequest.getProtocol());
 
-        Entity resultEntity = issueEntityStorageService.createIssue(requestResult, edmEntityType, edmEntitySet);
+        Entity resultEntity = issueEntityStorageService.createOrUpdateIssue(requestResult, edmEntityType, edmEntitySet);
 
         //3.serialize the response (we have to return the created entity)
         ContextURL contextURL = ContextURL.with().entitySet(edmEntitySet).build();
@@ -158,7 +159,8 @@ public class IssueEntityProcessor implements EntityProcessor {
         LOG.debug("Request URI: " + oDataRequest.getRawRequestUri());
         LOG.debug("Protocol: " + oDataRequest.getProtocol());
 
-        Entity resultEntity = issueEntityStorageService.updateIssue(requestEntity, edmEntityType, edmEntitySet, keyPredicates);
+        String issueId = StringUtils.replace(ODataUtil.getKeyValue(edmEntityType, keyPredicates), "'", "");
+        Entity resultEntity = issueEntityStorageService.updateIssue(requestEntity, edmEntityType, edmEntitySet, issueId);
 
         HttpMethod httpMethod = oDataRequest.getMethod();
 

@@ -331,7 +331,7 @@ public class IssueEntityStorageService {
         return null;
     }
 
-    public Entity updateIssue(Entity updatedEntity, EdmEntityType edmEntityType, EdmEntitySet edmEntitySet, List<UriParameter> uriParameterList) throws ODataApplicationException {
+    public Entity updateIssue(Entity updatedEntity, EdmEntityType edmEntityType, EdmEntitySet edmEntitySet, String issueId) throws ODataApplicationException {
         IssueInputParameters issueInputParameters = issueService.newIssueInputParameters();
         Property solManCustGuiD = updatedEntity.getProperty("SYSTEM_GUID");
         Property solManProjectID = updatedEntity.getProperty("PPM_PROJECT_ID");
@@ -343,7 +343,6 @@ public class IssueEntityStorageService {
         Property effort = updatedEntity.getProperty("EFFORT");
         Property effortUnit = updatedEntity.getProperty("EFFORT_UNIT");
 
-        String issueId = StringUtils.replace(ODataUtil.getKeyValue(edmEntityType, uriParameterList), "'", "");
 
         MutableIssue issue = issueService.getIssue(this.authenticationContext.getLoggedInUser(), issueId).getIssue();
 
@@ -615,5 +614,24 @@ public class IssueEntityStorageService {
             fileInfoDAO.saveFileInfo(ticketGuid.getValue().toString(), filename.getValue().toString(), filename.getValue().toString(),
                     extension, url.getValue().toString(), new Date(), AttachmentTypeEnum.DOCUMENT.getValue(), solmanParamsAO);
         }
+    }
+
+    /**
+     * Update an issue if an issue with the externalId, found in the properties of the provided entity, exists.
+     * Otherwise create it.
+     *
+     * @param createOrUpdateEntity
+     * @param edmEntityType
+     * @param edmEntitySet
+     * @return
+     * @throws ODataApplicationException
+     */
+    public Entity createOrUpdateIssue(Entity createOrUpdateEntity, EdmEntityType edmEntityType, EdmEntitySet edmEntitySet) throws ODataApplicationException {
+        String externalIssueId = createOrUpdateEntity.getProperty("EXTERNAL_ID").getValue().toString();
+
+        MutableIssue issue = issueService.getIssue(this.authenticationContext.getLoggedInUser(), externalIssueId).getIssue();
+
+        if (issue == null) return createIssue(createOrUpdateEntity, edmEntityType, edmEntitySet);
+        return updateIssue(createOrUpdateEntity, edmEntityType, edmEntitySet, externalIssueId);
     }
 }
