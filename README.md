@@ -49,3 +49,6 @@ This project is provided "as-is".
 Copyright (c) 2017 SAP SE or an SAP affiliate company. All rights reserved.
 This file is licensed under the Apache Software License, v. 2 except as noted otherwise in the [LICENSE](https://github.com/SAP/solman-fb-jira-addon/blob/master/LICENSE) file.
 
+## Information on Debugging
+In order to run this directly from an IDEA install atlas-debug with one of the most current versions
+and start it with `atlas-debug --jvmargs "-Xms2G -Xmx5G"` from this project folder

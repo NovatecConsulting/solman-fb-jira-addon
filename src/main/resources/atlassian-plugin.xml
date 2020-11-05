@@ -113,6 +113,10 @@
         <url-pattern>/getAuthenticationTypes</url-pattern>
     </servlet>
 
+    <servlet name="GetLogServlet" class="com.sap.mango.jiraintegration.solman.webservices.solmanconnections.GetLogServlet" key="getlog">
+        <url-pattern>/getLog</url-pattern>
+    </servlet>
+
     <servlet name="CopyFieldMappingServlet" class="com.sap.mango.jiraintegration.solman.webservices.copyconfiguration.CopyFieldConfigurationServlet" key="copyfieldmapping">
         <url-pattern>/copyFieldMapping</url-pattern>
     </servlet>
@@ -321,6 +325,10 @@
         <url-pattern>/jira-queue-processing</url-pattern>
     </servlet>
 
+    <servlet key="solmanlog-servlet" class="com.sap.mango.jiraintegration.solman.web.admin.log.SolmanLogServlet">
+        <url-pattern>/solmanlog</url-pattern>
+    </servlet>
+
     <web-resource name="Solman Connections Web Resources" key="solmanconn-resources">
         <dependency>com.atlassian.auiplugin:ajs</dependency>
         <dependency>com.atlassian.auiplugin:form-validation</dependency>
@@ -359,6 +367,11 @@
         <dependency>com.atlassian.auiplugin:form-validation</dependency>
         <dependency>com.atlassian.auiplugin:aui-select2</dependency>
         <resource type="download" name="solmanissuestatusmapping.js" location="templates/com/sap/mango/jiraintegration/administration/solmanjumpurlsettings/solmanjumpurlsettings.js"/>
+    </web-resource>
+
+    <web-resource name="Solman Log Web Resources" key="solman-log-resources">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        <resource type="download" name="solmanlog.js" location="templates/com/sap/mango/jiraintegration/administration/solmanlog/solmanlog.js"/>
     </web-resource>
 
     <web-resource name="Jira Queue Processing Web Resources" key="jira-queue-processing-resources">
@@ -423,6 +436,12 @@
         <description>Link to Jira Queue Processing Administration</description>
         <label key="solman.admin.jiraqueueprocessing.label" />
         <link linkId="solman-settings-link">/plugins/servlet/jira-queue-processing</link>
+    </web-item>
+
+    <web-item key="solman_log_page" name="Jira Log" section="admin_plugins_menu/solman_section" weight="150" >
+        <description>Link to Jira Log</description>
+        <label key="solman.admin.jiralog.label" />
+        <link linkId="solman-log-link">/plugins/servlet/solmanlog</link>
     </web-item>
 
     <customfield-type key="solman-link" name="Solman link" class="com.sap.mango.jiraintegration.solman.customfields.SolmanLinkCField">
